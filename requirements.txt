@@ -1,0 +1,8 @@
+#Package requirements for dish_scan.py and dish_image.py
+
+numpy
+pyserial
+regex
+matplotlib
+
+
