@@ -3,7 +3,8 @@ Microwave imaging using portable "Tailgater" satellite antenna.
 
 Gabe Emerson / Saveitforparts 2023. Email: gabe@saveitforparts.com
 
-Introduction:
+**Introduction:**
+
 This code controls a portable satellite antenna over USB using serial commands. 
 The dish_scan.py program aims the dish to a selected portion of the sky and records
 the RF signal strength. The dish_image.py program reads the resulting data and 
@@ -17,14 +18,18 @@ faster, and more efficient ways	to do some of the functions and calculations in
 the code. Please feel free to fix, improve, or add to anything (If you do, I'd
 love to hear what you did and how it worked!)    
 
-Applications:
+
+**Applications:**
+
 - Imaging geostationary TV satellites
 - Surveying an environment or room for microwave radiation
 - Imaging an environment using ambient or reflected microwaves from Ku band source
 - Imaging other wavelengths with a different feedhorn or LNB (not tested)
 - Integration with an RTL_SDR and other antenna elements (not tested) 
- 
-Hardware Requirements:
+
+
+**Hardware Requirements:**
+
 This code has been developed and tested with a Dish Network "Tailgater" portable
 satellite antenna. Specifically, a 2014 version in an octagonal-ish enclosure 
 with a USB "A" connector on the mainboard (located inside the enclosure, behind 
@@ -41,19 +46,25 @@ Other versions may have different console commands available.
 This code has been tested sucessfully on a range of Linux PCs, from 686-class using
 a low-resource distro, to higher-end running a modern distribution. 
 
-Notes on power supply:
+
+**Notes on power supply:**
+
 The USB connection only provides data to/from the dish. Power for the board, LNB, and 
 motors comes from the coax "F" connector. This needs between 13-18V DC, center pin 
 positive. Normally this is provided by a set-top box or satellite reciever. Power can
 also be provided by an in-line injector for powered antennas, a meter such as V8 Finder,
 or simply a DC adapter wired to a coax cable. Providing 13V will tell the LNB to use
 vertical polarity and 18V will use horizontal polarity. 
-	
-Package Requirements:
+
+
+**Package Requirements:**
+
 dish_scan.py uses the numpy, pyserial and regex packages. dish_image uses matplotlib.
 They can be installed individually or by running "pip install -r requirements.txt"
 
-Setting up / testing Tailgater console:
+
+**Setting up / testing Tailgater console:**
+
 To connect to a Tailgater antenna with USB A port, you will need an A-to-A cable
 (available online). 
 
@@ -74,7 +85,9 @@ Note that the console does not accept backspace, so if you make a mistake while 
 just hit enter to clear the console. If necessary, close the console or unplug the 
 dish to avoid a motor overrun. 
 
-Positioning the dish:
+
+**Positioning the dish:**
+
 The Tailgater dish uses a 360-degree counter-clockwise coordinate system, with the coax
 / F connector as "North" / 0 degrees. The dish considers an azimuth of 90 to be 90 degrees
 counterclockwise from the coax jack (looking down at the dish from above). Azimuth 180 is
@@ -88,7 +101,9 @@ Southern sky), but you can place it in any orientation you want. The dish scans 
 right, incrementing up from the starting elevation. Remember the coordinate system is
 "backwards" compared to standard compass headings.  
 
-Running a scan:
+
+**Running a scan:**
+
 Once the dish is connected, powered, and ready on a USB port, run:
 "python3 dish_scan.py"
 You will be prompted for the starting and ending azimuth and elevation of your scan. 
@@ -107,8 +122,10 @@ update live during the scan. On Gnome Image Viewer, this file should automatical
 it updates. It will be very small (x pixels equal to your scan's azimuth range, and y pixels
 equal to your scan's elevation range). However, it should be enough to get an idea if the
 scan is working. 
+
 	
-Generating an image from a scan:
+**Generating an image from a scan:**
+	
 Once a scan has completed, you will have three output files with the same timestamp:
 
 "result-<timestamp>.png"         The low-resolution preview image.
@@ -125,7 +142,7 @@ The code will load the corresponding scan-settings file automatically, and opens
 heatmap of the scan in a new window. You can save this heatmap for later use. 
 
 	
-Example Images:
+**Example Images:**
 I have included several example images to show what a scan looks like:
 	 
 "dish_image example.png"  The result of running a default scan with dish_scan.py and 
@@ -143,8 +160,10 @@ coming from a poorly-shielded PC tower (lower right).
 light, and 50% overlay of each. 
 				  
 "tailgater.png"		  Example of the antenna unit used for this project.
-			
-Additional notes:
+		
+	
+**Additional notes:**
+	
 The dish_scan.py code contains code for two resolution settings, however the high setting does
 NOT currently work with my dish due to motor drift. Low resolution (default) uses azangle and
 elangle commands on the Tailgater console, so each scan position is one degree. The high-
