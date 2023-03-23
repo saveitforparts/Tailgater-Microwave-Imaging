@@ -161,7 +161,18 @@ light, and 50% overlay of each.
 				  
 - "tailgater.png"		  Example of the antenna unit used for this project.
 		
-	
+
+**Example Files**
+
+I have included some example data files output by dish_scan.py, for processing with dish_image.py
+
+- "raw-data-20230321-193653.txt":   numpy matrix of signal strength at each azimuth and elevation pair
+
+- "scan-settings-20230321-193653.txt":    scan parameters for dish_image to use when processing
+
+- "result-20230321-193653.png":     Preview image created by dish_scan (not used by dish_image)
+
+
 **Additional notes:**
 	
 The dish_scan.py code contains code for two resolution settings, however the high setting does
