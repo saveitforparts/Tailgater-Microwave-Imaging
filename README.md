@@ -128,11 +128,11 @@ scan is working.
 	
 Once a scan has completed, you will have three output files with the same timestamp:
 
-"result-<timestamp>.png"         The low-resolution preview image.
+- "result-<timestamp>.png"         The low-resolution preview image.
 	
-"raw-data-<timestamp>.txt"       The raw scan values in a numpy array.
+- "raw-data-<timestamp>.txt"       The raw scan values in a numpy array.
 	
-"scan-settings-<timestamp>.txt"  The scan parameters (start and end azimuth / elevation)
+- "scan-settings-<timestamp>.txt"  The scan parameters (start and end azimuth / elevation)
 	
 dish_image.py will use the two text files to create a heatmap of your scan. Run the code 
 along with the name of the raw-data scan you want to process. For example:
@@ -145,21 +145,21 @@ heatmap of the scan in a new window. You can save this heatmap for later use.
 **Example Images:**
 I have included several example images to show what a scan looks like:
 	 
-"dish_image example.png"  The result of running a default scan with dish_scan.py and 
+- "dish_image example.png"  The result of running a default scan with dish_scan.py and 
 processing with dish_image.py. Shows geostationary TV satellites.
 				  
-"satellite overlay.png"   The previous file overlaid on a panoramic photo of the same area. 
+- "satellite overlay.png"   The previous file overlaid on a panoramic photo of the same area. 
 Note that trees, roof overhangs, and power poles are visible in RF.
 				  
-"satellite preview.png"   A scaled-up version of the "result" preview generated during a scan.
+- "satellite preview.png"   A scaled-up version of the "result" preview generated during a scan.
 	
-"room overlay.png"        An overlay of a default scan run indoors, showing microwave RF
+- "room overlay.png"        An overlay of a default scan run indoors, showing microwave RF
 coming from a poorly-shielded PC tower (lower right). 
 				  
-"house.png"		  A structure scan comparing KU band (with "hsv" colormap), visible
+- "house.png"		  A structure scan comparing KU band (with "hsv" colormap), visible
 light, and 50% overlay of each. 
 				  
-"tailgater.png"		  Example of the antenna unit used for this project.
+- "tailgater.png"		  Example of the antenna unit used for this project.
 		
 	
 **Additional notes:**
