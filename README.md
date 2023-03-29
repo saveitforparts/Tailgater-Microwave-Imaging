@@ -143,7 +143,7 @@ heatmap of the scan in a new window. You can save this heatmap for later use.
 
 I noticed an issue where counterclockwise rows were offset slightly from clockwise rows,
 this seems to be a combination of indexing and inconsistencies with motor movements. 
-The fix_image.py script is an alternate version of dis_image that outputs a better
+The fix_image.py script is an alternate version of dish_image that outputs a better
 bitmap from scans run with my dish. It does this by shifting every other row in the
 signal strenth array 3 places to the right. Each Tailgater unit might be a little
 different, and the range of elevation values can alter this offset. You may have to play
