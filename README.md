@@ -25,7 +25,7 @@ love to hear what you did and how it worked!)
 - Surveying an environment or room for microwave radiation
 - Imaging an environment using ambient or reflected microwaves from Ku band source
 - Imaging other wavelengths with a different feedhorn or LNB (not tested)
-- Integration with an RTL_SDR and other antenna elements (not tested) 
+- Integration with an SDR and other antenna elements (not tested) 
 
 
 **Hardware Requirements:**
