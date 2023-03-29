@@ -15,6 +15,6 @@ I have included several example images to show what a scan looks like:
 				  coming from a poorly-shielded PC tower (lower right). 
 				  
 - "house.png"		  A structure scan comparing KU band (with "hsv" colormap), visible
-				  light, and 50% overlay of each. 
+				  light, and 50% overlay of each. (Background noise in the sky is likely from terrestrial sources like radar and microwave radio)
 				  
 - "tailgater.png"		  Example of the antenna unit used for this project.
