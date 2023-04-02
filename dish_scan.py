@@ -56,6 +56,35 @@ if el_end > 70:
 	print('Elevation out of range, setting to 70')
 	el_end=70
 
+AZ_START_DEFAULT = 90
+AZ_END_DEFAULT = 270
+EL_START_DEFAULT = 5
+EL_END_DEFAULT = 70
+
+AZ_MIN = 0
+AZ_MAX = 360
+EL_MIN = 5
+EL_MAX = 70
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--az_start", type=int)
+parser.add_argument("--az_end", type=int)
+parser.add_argument("--el_start", type=int)
+parser.add_argument("--el_end", type=int)
+
+args = parser.parse_args()
+
+# Input error handling:
+# if setting is out of range, set defaults and ask to continue or cancel
+# if end < start, swap values
+# if start == end, what happens?
+
+if(args.az_start && args.az_start >= AZ_MIN && ):
+	az_start = args.az_start
+elif(args.az_start && args.az_start < AZ_MIN)
+
+
 #########This method doesn't work reliably, "nudge" results in too much motor drift on azimuth axis
 #Choose between between azangle/elangle for low res and aznudge/elnudge for high res
 #resolution = int(input('Resolution (1=low, 2=high, default 1): ') or 1)
