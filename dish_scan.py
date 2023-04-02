@@ -22,47 +22,14 @@ dish = serial.Serial(
 print ("Serial port connected")
 print ('')
 
-#Prompt for scan parameters, with default values and valid range checks
-az_start = int(input('Starting Azimuth in degrees (0-360, default 90): ') or 90)
-
-if az_start < 0:
-	print('Azimuth out of range, setting to 0')
-	az_start=0
-if az_start > 360:
-	print('Azimuth out of range, setting to 360')
-	az_start=360
-
-az_end = int(input('Ending Azimuth in degrees (default 270): ') or 270)
-if az_end < 0:
-	print('Azimuth out of range, setting to 0')
-	az_end=0
-if az_end > 360:
-	print('Azimuth out of range, setting to 360')
-	az_end=360
-
-el_start = int(input('Starting Elevation in degrees (5-70, default 5): ') or 5)
-if el_start < 5:
-	print('Elevation out of range, setting to 5')
-	el_start=5
-if el_start > 70:
-	print('Elevation out of range, setting to 70')
-	el_start=70
-
-el_end = int(input('Ending Elevation in degrees (default 70): ') or 70)
-if el_end < 5:
-	print('Elevation out of range, setting to 5')
-	el_end=5
-if el_end > 70:
-	print('Elevation out of range, setting to 70')
-	el_end=70
-
 
 #######################################################
-#######################################################
+################## Input validation ###################
 #######################################################
 
 import argparse
 import sys
+
 
 def value_in_range(value, min, max):
     if(value >= min and value <= max):
@@ -130,12 +97,24 @@ AZ_MAX = 360
 EL_MIN = 5
 EL_MAX = 70
 
-parser = argparse.ArgumentParser()
+program_description = "Program to scan with Dish Tailgater " +\
+                      "and output signal strength bitmap"
 
-parser.add_argument("--az_start", "-a1", type=int)
-parser.add_argument("--az_end", "-a2", type=int)
-parser.add_argument("--el_start", "-e1", type=int)
-parser.add_argument("--el_end", "-e2", type=int)
+az_start_help = "start azimuth: valid between {} and {}, default = {}".format(
+                    AZ_MIN, AZ_MAX, AZ_START_DEFAULT)
+az_end_help = "end azimuth: valid between {} and {}, default = {}".format(
+                    AZ_MIN, AZ_MAX, AZ_END_DEFAULT)
+el_start_help = "start elevation: valid between {} and {}, default = {}".format(
+                    EL_MIN, EL_MAX, EL_START_DEFAULT)
+el_end_help = "end elevation: valid between {} and {}, default = {}".format(
+                    EL_MIN, EL_MAX, EL_END_DEFAULT)
+
+parser = argparse.ArgumentParser(description=program_description)
+
+parser.add_argument("--az_start", "-a1", type=int, help=az_start_help)
+parser.add_argument("--az_end", "-a2", type=int, help=az_end_help)
+parser.add_argument("--el_start", "-e1", type=int, help=el_start_help)
+parser.add_argument("--el_end", "-e2", type=int, help=el_end_help)
 
 args = parser.parse_args()
 
@@ -206,10 +185,11 @@ if(error_quit):
     sys.exit()
 		
 
+#######################################################
+#######################################################
+#######################################################
 
-#######################################################
-#######################################################
-#######################################################
+
 
 #########This method doesn't work reliably, "nudge" results in too much motor drift on azimuth axis
 #Choose between between azangle/elangle for low res and aznudge/elnudge for high res
