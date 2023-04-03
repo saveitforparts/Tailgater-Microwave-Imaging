@@ -1,8 +1,10 @@
 #Package requirements for dish_scan.py and dish_image.py
 
-numpy
-pyserial
-regex
-matplotlib
+numpy~=1.24.2
+pyserial~=3.5
+regex~=2023.3.23
+matplotlib~=3.7.1
 
 
+
+Pillow~=9.5.0
