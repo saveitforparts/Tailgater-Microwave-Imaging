@@ -1,6 +1,6 @@
 import sys
 import util
-from numpy import array
+from numpy import array, roll
 
 def process_data(sky_data, az_start, az_end, el_start, el_end, resolution):
     # Trim the messy edges of the array
@@ -10,7 +10,7 @@ def process_data(sky_data, az_start, az_end, el_start, el_end, resolution):
     # Shift every other row of matrix to fix motor/indexing issue
     for row_index in range(el_end - el_start):
         if row_index % 2 == 0:
-            cleaned_data[row_index] = np.roll(cleaned_data[row_index], 3)
+            cleaned_data[row_index] = roll(cleaned_data[row_index], 3)
 
     # Calculate the azimuth and elevation range
     az_range = array([az_end, (az_start + az_end) / 2, az_start])
