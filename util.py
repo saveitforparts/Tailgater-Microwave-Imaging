@@ -39,31 +39,6 @@ def extract_timestamp(file_name):
     header, *split = file_name.split('.')
     return filename_parts[1] + '-' + header
 
-# Function to process the sky data
-
-
-def process_data(sky_data, az_start, az_end, el_start, el_end, resolution):
-    cleaned_data = sky_data[1:, 1:]
-
-    # Apply motor/indexing issue fix
-    for row_index in range(el_end - el_start):
-        if row_index % 2 == 0:
-            cleaned_data[row_index] = roll(cleaned_data[row_index], 3)
-
-    if resolution == 1:
-        cleaned_data = cleaned_data[:, :-1]
-        az_range = array([az_end, (az_start + az_end) / 2, az_start])
-        el_range = array([el_end, (el_start + el_end) / 2, el_start])
-    elif resolution == 2:
-        cleaned_data = cleaned_data[:, :-
-                                    (az_end - (az_end - az_start) * 5 - 1)]
-        az_range = array([az_end, (az_start + az_end) / 2, az_start])
-        el_range = array([el_end, (el_start + el_end) / 2, el_start])
-    else:
-        raise NotImplementedError("Medium resolution not implemented yet")
-    return cleaned_data, az_range, el_range
-
-
 # Function to plot heatmap
 
 
