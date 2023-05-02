@@ -37,12 +37,15 @@ with a USB "A" connector on the mainboard (located inside the enclosure, behind
 the dish reflector). There are many variations, models, and versions of this 
 antenna, including Wallace, VuQube, Dish, King Controls, etc. I have not found a
 consistent model numbering scheme, so I don't know how to identify the correct 
-model without opening the top and looking for a USB port. Other models have USB
-mini or other ports, and some appear to have jumpers for 9-pin serial. I have not 
-tested this software on any of those variations.
+model without opening the top and looking for a USB port. Other models have mini-USB
+or other ports, and some appear to have jumpers for 9-pin serial. While I have
+partially tested this code on a 2011 version with mini-USB port, and had some success,
+I have not fully tested it on anything but the 2014 USB-A version. 
 
 My test unit uses firmware version "pragelato.h 704 2013-08-09 03:41:27Z rudrava"
-Other versions may have different console commands available.
+Other versions may have different console commands available. For example, the 2011
+firmware does not seem to include "azangle". To use such a system, you will need to
+replace any "azangle" commands with a series of "aznudge" or "azim" commands. 
 
 This code has been tested sucessfully on a range of Linux PCs, from 686-class using
 a low-resource distro, to higher-end running a modern distribution. 
