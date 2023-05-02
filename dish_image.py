@@ -1,4 +1,5 @@
 #Python program to process raw Tailgater scan data from dish_scan.py
+#Version 2.0
 #Takes saved text file (numpy array) and converts into heatmap
 
 import numpy as np
@@ -32,7 +33,7 @@ if resolution == 1: #standard low resolution
 	#Trim off the messy edges of the array (probably an ugly hack)
 	cleaned_data = np.delete(sky_data, obj=0, axis=0)
 	cleaned_data = np.delete(cleaned_data, obj=0, axis=1)
-	cleaned_data = np.delete(cleaned_data, obj=(az_end-az_start-1), axis=1)
+	#cleaned_data = np.delete(cleaned_data, obj=(az_end-az_start-1), axis=1)
 	
 	#set up custom axis labels
 	x=np.array([0,(az_end-az_start-1)/2,az_end-az_start-2])
@@ -47,13 +48,13 @@ elif resolution == 2:
 	#Trim off the messy edges of the array (probably an ugly hack)
 	cleaned_data = np.delete(sky_data, obj=0, axis=0)
 	cleaned_data = np.delete(cleaned_data, obj=0, axis=1)
-	cleaned_data = np.delete(cleaned_data, obj=(az_end-((az_end-az_start)*5)-1), axis=1)
+	#cleaned_data = np.delete(cleaned_data, obj=(az_end-((az_end-az_start)*5)-1), axis=1)
 	
 	#set up custom axis labels
 	x=np.array([0,(((az_end-az_start)*5)-1)/2,((az_end-az_start)*5)-2])
 	az_range=np.array([az_end,(az_start+az_end)/2,az_start])
 	plt.xticks(x,az_range)
-	y=np.array([0,(((el_end-el_start)*5)-1)/2,((el_end-el_start)*5)])
+	y=np.array([0,(((el_end-el_start)*3)-1)/2,((el_end-el_start)*3)])
 	el_range=np.array([el_end,(el_start+el_end)/2,el_start])
 	plt.yticks(y,el_range)
 
