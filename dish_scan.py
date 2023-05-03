@@ -23,39 +23,174 @@ dish = serial.Serial(
 print ("Serial port connected")
 print ('')
 
-#Prompt for scan parameters, with default values and valid range checks
-az_start = int(input('Starting Azimuth in degrees (0-360, default 90): ') or 90)
 
-if az_start < 0:
-	print('Azimuth out of range, setting to 0')
-	az_start=0
-if az_start > 360:
-	print('Azimuth out of range, setting to 360')
-	az_start=360
+#######################################################
+################## Input validation ###################
+#######################################################
 
-az_end = int(input('Ending Azimuth in degrees (default 270): ') or 270)
-if az_end < 0:
-	print('Azimuth out of range, setting to 0')
-	az_end=0
-if az_end > 360:
-	print('Azimuth out of range, setting to 360')
-	az_end=360
+import argparse
+import sys
 
-el_start = int(input('Starting Elevation in degrees (5-70, default 5): ') or 5)
-if el_start < 5:
-	print('Elevation out of range, setting to 5')
-	el_start=5
-if el_start > 70:
-	print('Elevation out of range, setting to 70')
-	el_start=70
 
-el_end = int(input('Ending Elevation in degrees (default 70): ') or 70)
-if el_end < 5:
-	print('Elevation out of range, setting to 5')
-	el_end=5
-if el_end > 70:
-	print('Elevation out of range, setting to 70')
-	el_end=70
+def value_in_range(value, min, max):
+    if(value >= min and value <= max):
+        return True
+    else:
+        return False
+
+
+def validate_input(parameter_name, supplied_value, min_value, max_value, default_value):
+    parameter_error_text = "Error: supplied parameter {parameter} " +\
+                           "[{value}] is out of range [{min}, {max}]; " +\
+                           "supply a new value or press enter to use the " +\
+                           "default value [{default}] "
+
+    validated_value = default_value # safe placeholder
+
+    while(1):
+        this_error = parameter_error_text.format(parameter=parameter_name,
+                                                 value=supplied_value,
+                                                 min=min_value,
+                                                 max=max_value,
+                                                 default=default_value)
+        error_response = input(this_error)
+        
+        # Possible outcomes:
+        # it's blank - use the default value and continue
+        # it's a number - check value against range
+        #       if it's in range, use it and continue
+        #       if it's out of range, continue the error loop
+        # it's not a number - continue the error loop
+
+        supplied_value = error_response # to update error message if necessary
+
+        # handle blank case - use default value and continue
+        if(error_response == ""):
+            validated_value = default_value
+            break
+
+        # check if it can be converted to an int
+        try:
+            new_value = int(error_response)
+            
+            if(value_in_range(new_value, min_value, max_value)):
+                # good input, use it and continue
+                validated_value = new_value
+                break
+            else:
+                # out of range - ask again
+                continue
+
+        except ValueError:
+            # invalid input - ask again
+            continue
+
+    return validated_value
+
+
+AZ_START_DEFAULT = 90
+AZ_END_DEFAULT = 270
+EL_START_DEFAULT = 5
+EL_END_DEFAULT = 70
+
+AZ_MIN = 0
+AZ_MAX = 360
+EL_MIN = 5
+EL_MAX = 70
+
+program_description = "Program to scan with Dish Tailgater " +\
+                      "and output signal strength bitmap"
+
+az_start_help = "start azimuth: valid between {} and {}, default = {}".format(
+                    AZ_MIN, AZ_MAX, AZ_START_DEFAULT)
+az_end_help = "end azimuth: valid between {} and {}, default = {}".format(
+                    AZ_MIN, AZ_MAX, AZ_END_DEFAULT)
+el_start_help = "start elevation: valid between {} and {}, default = {}".format(
+                    EL_MIN, EL_MAX, EL_START_DEFAULT)
+el_end_help = "end elevation: valid between {} and {}, default = {}".format(
+                    EL_MIN, EL_MAX, EL_END_DEFAULT)
+
+parser = argparse.ArgumentParser(description=program_description)
+
+parser.add_argument("--az_start", "-a1", type=int, help=az_start_help)
+parser.add_argument("--az_end", "-a2", type=int, help=az_end_help)
+parser.add_argument("--el_start", "-e1", type=int, help=el_start_help)
+parser.add_argument("--el_end", "-e2", type=int, help=el_end_help)
+
+args = parser.parse_args()
+
+# Input error handling:
+# if setting is out of range, set defaults and ask to continue or cancel
+# if end < start, swap values
+# if start == end, what happens?
+
+# az_start
+if(args.az_start and value_in_range(args.az_start, AZ_MIN, AZ_MAX)):
+    az_start = args.az_start
+elif(args.az_start):
+    az_start = validate_input("az_start", args.az_start, 
+                              AZ_MIN, AZ_MAX, AZ_START_DEFAULT)
+else:
+    az_start = AZ_START_DEFAULT
+
+# az_end
+if(args.az_end and value_in_range(args.az_end, AZ_MIN, AZ_MAX)):
+    az_end = args.az_end
+elif(args.az_end):
+    az_end = validate_input("az_end", args.az_end, 
+                            AZ_MIN, AZ_MAX, AZ_END_DEFAULT)
+else:
+    az_end = AZ_END_DEFAULT
+
+# el_start
+if(args.el_start and value_in_range(args.el_start, EL_MIN, EL_MAX)):
+    el_start = args.el_start
+elif(args.el_start):
+    el_start = validate_input("el_start", args.el_start, 
+                              EL_MIN, EL_MAX, EL_START_DEFAULT)
+else:
+    el_start = EL_START_DEFAULT
+
+# el_end
+if(args.el_end and value_in_range(args.el_end, EL_MIN, EL_MAX)):
+    el_end = args.el_end
+elif(args.el_end):
+    el_end = validate_input("el_end", args.el_end,
+                            EL_MIN, EL_MAX, EL_END_DEFAULT)
+else:
+    el_end = EL_END_DEFAULT
+
+# compare and swap if end > start
+if(az_start > az_end):
+    temp = az_start
+    az_start = az_end
+    az_end = temp
+
+if(el_start > el_end):
+    temp = el_start
+    el_start = el_end
+    el_end = temp
+
+# for now if they're equal, error out
+error_quit = 0
+
+if(az_start == az_end):
+    error_quit = 1
+    print("Error - azimuth start and end values are equal")
+
+if(el_start == el_end):
+    error_quit = 1
+    print("Error - elevation start and end values are equal")
+
+if(error_quit):
+    sys.exit()
+		
+
+#######################################################
+#######################################################
+#######################################################
+
+
 
 
 #Choose between between azangle/elangle for low res and aznudge/elnudge for high res
